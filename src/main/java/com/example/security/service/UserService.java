@@ -26,5 +26,9 @@ public class UserService {
 		User user = new User(userDto.getUsername(), passwordEncoder.encode(userDto.getPassword()), userDto.getFullname());
 		return userRepository.save(user);
 	}
+	
+	public User save(User user) {
+		return userRepository.save(user);
+	}
 
 }
