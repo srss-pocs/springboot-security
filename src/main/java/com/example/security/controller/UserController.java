@@ -21,12 +21,8 @@ public class UserController {
 	@Autowired
 	private UserDetailsService userDetailsService;
 
+	@Autowired
 	private UserService userService;
-
-	public UserController(UserService userService) {
-
-		this.userService = userService;
-	}
 
 	@GetMapping("/home")
 	public String home(Model model, Principal principal) {

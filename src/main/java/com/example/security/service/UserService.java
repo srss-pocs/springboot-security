@@ -14,7 +14,8 @@ public class UserService {
 	@Autowired
 	PasswordEncoder passwordEncoder;
 
-	private UserRepository userRepository;
+	@Autowired
+	UserRepository userRepository;
 
 	public User findByUsername(String username) {
 
