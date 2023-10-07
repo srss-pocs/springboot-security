@@ -25,22 +25,25 @@ public class SecurityConfig {
 		return new BCryptPasswordEncoder();
 	}
 
-	@SuppressWarnings("removal")
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-		http.csrf().disable()
-		.authorizeHttpRequests().requestMatchers("/register").permitAll()
-		.requestMatchers("/home").permitAll()
-		.and()
-		.formLogin().loginPage("/login")
-		.loginProcessingUrl("/login")
-		.defaultSuccessUrl("/home", true).permitAll()
-		.and()
-		.logout().invalidateHttpSession(true)
-		.clearAuthentication(true).logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-		.logoutSuccessUrl("/login?logout").permitAll();
-
+        http.csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests((authorize) ->
+                        authorize.requestMatchers("/register/**").permitAll()
+                                .requestMatchers("/index").permitAll()
+                                .requestMatchers("/home").permitAll())
+                .formLogin(
+                        form -> form
+                                .loginPage("/login")
+                                .loginProcessingUrl("/login")
+                                .defaultSuccessUrl("/home")
+                                .permitAll()
+                ).logout(
+                logout -> logout
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                        .permitAll()
+        );
 		return http.build();
 
 	}
